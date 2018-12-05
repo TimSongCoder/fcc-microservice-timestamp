@@ -33,7 +33,7 @@ var listener = app.listen(process.env.PORT, function () {
 
 app.get('/api/timestamp/:date_string', (req, res) => {
   let dateString = req.params.date_string;
-  const parsedDate = dateString ? new Date(dateString) : new Date();
+  const parsedDate = dateString ? new Date(/^\d+$/.test(dateString) ? Number.parseInt(dateString) : dateString) : new Date();
   if(parsedDate.getTime()) {
     res.json({unix: parsedDate.getTime(), utc: parsedDate.toUTCString()});
   } else {
